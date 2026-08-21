@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Vacantes FI">
+<meta name="theme-color" content="#0b0d12">
+<meta name="color-scheme" content="dark">
+<title>Vacantes FI · 1867 G1</title>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23101420'/%3E%3Ctext x='90' y='84' font-family='Helvetica,Arial' font-size='52' font-weight='bold' fill='%23ffd84d' text-anchor='middle'%3E1867%3C/text%3E%3Ctext x='90' y='134' font-family='Helvetica,Arial' font-size='44' font-weight='bold' fill='%2300e39a' text-anchor='middle'%3EG1%3C/text%3E%3C/svg%3E">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0b0d12; --bg2:#121620; --card:#151a26; --line:#242b3b;
+  --tx:#e8ecf5; --dim:#8b94a8; --acc:#ffd84d; --ok:#00e39a; --bad:#ff4d6a; --warn:#ff9f45;
+  --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);
+  font:15px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
+  overscroll-behavior:none;-webkit-text-size-adjust:100%}
+body{padding:calc(var(--safe-t) + 10px) 12px calc(var(--safe-b) + 24px);max-width:720px;margin:0 auto}
+body.ALARMA{animation:flash .55s steps(1,end) infinite}
+@keyframes flash{0%{background:#0b0d12}50%{background:#2a0710}}
+h1{font-size:17px;margin:0;letter-spacing:-.2px;font-weight:700}
+.sub{font-size:12px;color:var(--dim);margin-top:2px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.top .grow{flex:1;min-width:0}
+.dot{width:11px;height:11px;border-radius:50%;background:var(--dim);flex:none;box-shadow:0 0 0 0 currentColor}
+.dot.on{background:var(--ok);animation:pulse 2s infinite;color:var(--ok)}
+.dot.err{background:var(--bad);color:var(--bad)}
+.dot.busy{background:var(--acc);color:var(--acc);animation:pulse .8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 currentColor;opacity:1}70%{box-shadow:0 0 0 9px transparent;opacity:.6}100%{box-shadow:0 0 0 0 transparent;opacity:1}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.hero{text-align:center;padding:22px 16px;position:relative;overflow:hidden}
+.hero.hit{border-color:var(--ok);background:linear-gradient(180deg,#0d2b22,#151a26);box-shadow:0 0 0 1px var(--ok),0 8px 40px -12px rgba(0,227,154,.5)}
+.hero .lbl{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--dim);font-weight:700}
+.hero .big{font-size:76px;line-height:.95;font-weight:800;margin:10px 0 4px;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum";letter-spacing:-3px}
+.hero .big.zero{color:var(--dim)}
+.hero .big.hit{color:var(--ok);text-shadow:0 0 34px rgba(0,227,154,.55)}
+.hero .who{font-size:14px;font-weight:600}
+.hero .meta{font-size:12px;color:var(--dim);margin-top:8px}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:16px;font-size:16px;font-weight:700;
+  background:var(--bg2);color:var(--tx);border:1px solid var(--line);cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
+.btn:active{transform:scale(.985)}
+.btn.go{background:linear-gradient(180deg,#00e39a,#00b87e);color:#04140e;border-color:transparent;font-size:18px;padding:19px}
+.btn.stop{background:#2a1420;color:var(--bad);border-color:#5a2137}
+.btn.gold{background:linear-gradient(180deg,#ffd84d,#e6b800);color:#241c00;border-color:transparent}
+.btn.sm{padding:11px;font-size:13px;font-weight:600}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--dim);text-align:left;padding:0 6px 8px;font-weight:700}
+td{padding:9px 6px;border-top:1px solid var(--line);vertical-align:top}
+tr.free td{background:rgba(0,227,154,.07)}
+tr.watch td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
+.g{font-weight:800;font-size:16px;font-variant-numeric:tabular-nums}
+.v{font-weight:800;font-variant-numeric:tabular-nums;text-align:right}
+.v.free{color:var(--ok)}.v.zero{color:var(--dim)}
+.tiny{font-size:11px;color:var(--dim);line-height:1.35}
+.sec{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim);font-weight:700;margin:0 0 10px}
+label.f{display:block;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:5px}
+input[type=text],input[type=number],select{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--tx);
+  border-radius:10px;padding:12px;font:inherit;font-size:16px}
+input:focus,select:focus{outline:0;border-color:var(--acc)}
+.sw{display:flex;align-items:center;gap:11px;padding:11px 0;border-top:1px solid var(--line);cursor:pointer}
+.sw:first-of-type{border-top:0}
+.sw input{width:auto;flex:none;transform:scale(1.35);accent-color:var(--ok);margin:0 2px}
+.sw .t{flex:1}.sw .t b{display:block;font-size:14px;font-weight:600}
+details>summary{list-style:none;cursor:pointer;font-size:12px;color:var(--dim);font-weight:700;
+  letter-spacing:1.4px;text-transform:uppercase;padding:4px 0}
+details>summary::-webkit-details-marker{display:none}
+details>summary::after{content:" ▾";color:var(--acc)}
+details[open]>summary::after{content:" ▴"}
+#log{max-height:230px;overflow-y:auto;-webkit-overflow-scrolling:touch;font-size:12px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+#log div{padding:5px 0;border-top:1px solid var(--line);display:flex;gap:8px}
+#log div:first-child{border-top:0}
+#log .ts{color:var(--dim);flex:none}
+#log .hit{color:var(--ok);font-weight:700}
+#log .err{color:var(--bad)}
+#log .wrn{color:var(--warn)}
+.banner{position:sticky;top:calc(var(--safe-t));z-index:50;margin:-4px 0 12px;border-radius:16px;
+  padding:18px;text-align:center;background:linear-gradient(180deg,#00e39a,#00a874);color:#04140e;display:none;
+  box-shadow:0 10px 40px -8px rgba(0,227,154,.6)}
+.banner.show{display:block;animation:pop .35s}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.banner h2{margin:0 0 4px;font-size:22px;font-weight:800}
+.banner p{margin:0 0 12px;font-size:14px;font-weight:600}
+.banner .btn{background:#04140e;color:#00e39a;border:0;margin-bottom:7px}
+.banner .btn.ghost{background:rgba(4,20,14,.14);color:#04140e}
+.pxs{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.px{font-size:10px;padding:3px 8px;border-radius:20px;border:1px solid var(--line);color:var(--dim)}
+.px.ok{border-color:var(--ok);color:var(--ok)}.px.bad{border-color:var(--bad);color:var(--bad)}
+.px.act{background:var(--ok);color:#04140e;border-color:var(--ok);font-weight:700}
+.foot{font-size:11px;color:var(--dim);text-align:center;line-height:1.6;padding:6px 4px 0}
+.foot a{color:var(--dim)}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <span class="dot" id="dot"></span>
+  <div class="grow">
+    <h1>Radar de vacantes · FI UNAM</h1>
+    <div class="sub" id="statusTxt">Detenido — presiona INICIAR</div>
+  </div>
+</div>
+
+<div class="banner" id="banner">
+  <h2 id="bTitle">¡SE LIBERÓ LUGAR!</h2>
+  <p id="bTxt"></p>
+  <a class="btn" id="bGo" href="https://www.ssa.ingenieria.unam.mx/reinscripcion.html" target="_blank" rel="noopener">ABRIR REINSCRIPCIÓN →</a>
+  <button class="btn ghost" onclick="ack()">Silenciar y seguir vigilando</button>
+</div>
+
+<div class="card hero" id="hero">
+  <div class="lbl" id="heroLbl">Vigilando</div>
+  <div class="big zero" id="heroNum">—</div>
+  <div class="who" id="heroWho">1867 · Grupo 1</div>
+  <div class="meta" id="heroMeta">Sin datos todavía</div>
+</div>
+
+<button class="btn go" id="mainBtn" onclick="toggle()">▶︎ INICIAR VIGILANCIA</button>
+
+<div class="row" style="margin-top:8px">
+  <button class="btn sm" onclick="poll(true)">↻ Revisar ya</button>
+  <button class="btn sm" onclick="testAlarm()">🔊 Probar alarma</button>
+</div>
+
+<div class="card" style="margin-top:12px">
+  <div class="sec">Grupos de la asignatura</div>
+  <div id="tblWrap"><div class="tiny">Todavía no hay datos. Presiona <b>INICIAR VIGILANCIA</b>.</div></div>
+  <div class="pxs" id="pxs"></div>
+</div>
+
+<div class="card">
+  <details id="cfgBox">
+    <summary>Configuración</summary>
+    <div style="margin-top:14px">
+      <div class="grid2">
+        <div>
+          <label class="f" for="fClave">Clave asignatura</label>
+          <input type="text" id="fClave" inputmode="numeric" maxlength="4" value="1867">
+        </div>
+        <div>
+          <label class="f" for="fGrupos">Grupos a vigilar</label>
+          <input type="text" id="fGrupos" value="1" placeholder="1, 3, 6867-4">
+        </div>
+      </div>
+      <div class="tiny" style="margin:7px 0 14px">
+        Separa con comas. Para un grupo de <b>laboratorio</b> escribe <b>clave-grupo</b>, por ejemplo <b>6867-4</b>.
+      </div>
+
+      <div class="grid2">
+        <div>
+          <label class="f" for="fSeg">Revisar cada (seg)</label>
+          <input type="number" id="fSeg" min="15" max="900" step="5" value="45">
+        </div>
+        <div>
+          <label class="f" for="fGo">Botón "abrir" apunta a</label>
+          <select id="fGo">
+            <option value="https://www.ssa.ingenieria.unam.mx/reinscripcion.html">SSA · Reinscripción</option>
+            <option value="https://www.dgae-siae.unam.mx/www_gate.php">DGAE-SIAE</option>
+            <option value="https://www.ssa.ingenieria.unam.mx/horarios.html">SSA · Horarios</option>
+          </select>
+        </div>
+      </div>
+      <div class="tiny" style="margin:7px 0 12px">
+        El SSA regenera el archivo cada ~5 min, así que bajar de 30 s no te hace ver los cambios más rápido.
+      </div>
+
+      <label class="sw"><input type="checkbox" id="fAny">
+        <span class="t"><b>Avisar de cualquier grupo</b><span class="tiny">No sólo los que vigilas</span></span></label>
+      <label class="sw"><input type="checkbox" id="fKeep" checked>
+        <span class="t"><b>Mantener vivo en segundo plano</b><span class="tiny">Audio inaudible para que iOS no congele la pestaña con la pantalla apagada</span></span></label>
+      <label class="sw"><input type="checkbox" id="fWake">
+        <span class="t"><b>Impedir que se apague la pantalla</b><span class="tiny">Gasta batería, pero es lo más confiable</span></span></label>
+      <label class="sw"><input type="checkbox" id="fNotif" checked>
+        <span class="t"><b>Notificación del sistema</b><span class="tiny">En iPhone sólo funciona si agregas esto a la pantalla de inicio</span></span></label>
+      <label class="sw"><input type="checkbox" id="fVoz" checked>
+        <span class="t"><b>Avisar por voz</b><span class="tiny">Dice en voz alta qué grupo se liberó</span></span></label>
+
+      <button class="btn sm" style="margin-top:14px" onclick="resetAll()">Borrar historial y ajustes</button>
+    </div>
+  </details>
+</div>
+
+<div class="card">
+  <div class="sec">Bitácora</div>
+  <div id="log"><div><span class="ts">--:--:--</span><span>Esperando…</span></div></div>
+</div>
+
+<div class="foot">
+  Fuente: <a href="https://www.ssa.ingenieria.unam.mx/horarios.html" target="_blank" rel="noopener">ssa.ingenieria.unam.mx</a> ·
+  lectura pasiva del mismo archivo que usa el sitio oficial.<br>
+  Verifica siempre en el portal antes de dar por hecho un lugar.
+</div>
+
+<audio id="keep" loop playsinline></audio>
+<audio id="siren" loop playsinline></audio>
+
+<script>
+"use strict";
+
+/* ─────────── Config ─────────── */
+var DEF = { clave:"1867", grupos:"1", seg:45, any:false, keep:true, wake:false,
+            notif:true, voz:true, go:"https://www.ssa.ingenieria.unam.mx/reinscripcion.html" };
+var CFG = Object.assign({}, DEF);
+var LS = "vacfi.v1";
+function loadCfg(){ try{ Object.assign(CFG, JSON.parse(localStorage.getItem(LS)||"{}")); }catch(e){} }
+function saveCfg(){ try{ localStorage.setItem(LS, JSON.stringify(CFG)); }catch(e){} }
+function $(id){ return document.getElementById(id); }
+
+/* ─────────── Estado ─────────── */
+var running=false, polling=false, nextAt=0, alarming=false;
+var PREV={}, ACK={}, ROWS=[], srcTime="", lastOk=0, srcSince=0, staleWarned=false;
+
+/* ─────────── Proxies: el SSA no manda cabeceras CORS, hay que rebotar ─────────── */
+var PROXIES = [
+  { id:"jina",  name:"jina",       url:function(u){ return "https://r.jina.ai/"+u; } },
+  { id:"allo",  name:"allorigins", url:function(u){ return "https://api.allorigins.win/raw?url="+encodeURIComponent(u); } },
+  { id:"ctabs", name:"codetabs",   url:function(u){ return "https://api.codetabs.com/v1/proxy?quest="+encodeURIComponent(u); } },
+  { id:"dir",   name:"directo",    url:function(u){ return u; } }
+];
+var pxHealth={}, pxLast=null;
+
+function targetUrl(){
+  return "https://www.ssa.ingenieria.unam.mx/cj/tmp/programacion_horarios/"+CFG.clave+".html?_="+Date.now();
+}
+
+/* ─────────── Audio ─────────── */
+var AC=null, keepEl=$("keep"), sirenEl=$("siren"), watchdogNode=null, audioReady=false;
+
+function wav(samples, rate){
+  var n=samples.length, buf=new ArrayBuffer(44+n*2), v=new DataView(buf), i;
+  function s(o,t){ for(i=0;i<t.length;i++) v.setUint8(o+i,t.charCodeAt(i)); }
+  s(0,"RIFF"); v.setUint32(4,36+n*2,true); s(8,"WAVE"); s(12,"fmt ");
+  v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true);
+  v.setUint32(24,rate,true); v.setUint32(28,rate*2,true); v.setUint16(32,2,true); v.setUint16(34,16,true);
+  s(36,"data"); v.setUint32(40,n*2,true);
+  for(i=0;i<n;i++){ var x=Math.max(-1,Math.min(1,samples[i])); v.setInt16(44+i*2, x<0?x*32768:x*32767, true); }
+  var b=new Uint8Array(buf), str="", CH=8192;
+  for(i=0;i<b.length;i+=CH) str+=String.fromCharCode.apply(null,b.subarray(i,i+CH));
+  return "data:audio/wav;base64,"+btoa(str);
+}
+function quietWav(){
+  var r=8000, n=r*2, a=new Float32Array(n);
+  for(var i=0;i<n;i++) a[i]=(Math.random()*2-1)*0.00012;   /* ~-78 dBFS: inaudible pero es audio real */
+  return wav(a,r);
+}
+function sirenWav(){
+  var r=16000, n=Math.floor(r*3), a=new Float32Array(n), ph=0;
+  for(var i=0;i<n;i++){
+    var t=i/r, slot=Math.floor(t/0.26)%2, f=slot?1244.5:830.6, loc=(t%0.26)/0.26;
+    var env=Math.min(1,loc*14)*Math.min(1,(1-loc)*14);
+    ph+=2*Math.PI*f/r;
+    a[i]=(Math.sin(ph)*0.62 + Math.sin(ph*2)*0.16 + Math.sin(ph*3)*0.07)*env;
+  }
+  return wav(a,r);
+}
+
+function initAudio(){                    /* SOLO desde un gesto del usuario: iOS lo exige */
+  if(audioReady) return;
+  try{
+    keepEl.src=quietWav(); keepEl.loop=true; keepEl.preload="auto";
+    sirenEl.src=sirenWav(); sirenEl.loop=true; sirenEl.preload="auto";
+    var Ctx=window.AudioContext||window.webkitAudioContext;
+    if(Ctx){
+      AC=new Ctx();
+      if(AC.state==="suspended") AC.resume();
+      /* Nodo mudo que sigue latiendo aunque iOS congele los setInterval: reloj de respaldo */
+      if(AC.createScriptProcessor){
+        watchdogNode=AC.createScriptProcessor(4096,1,1);
+        var g=AC.createGain(); g.gain.value=0.0000001;
+        watchdogNode.onaudioprocess=beat;
+        watchdogNode.connect(g); g.connect(AC.destination);
+      }
+    }
+    audioReady=true;
+  }catch(e){ log("Audio no disponible: "+e.message,"wrn"); }
+}
+var lastBeat=0;
+function beat(){ var t=Date.now(); if(t-lastBeat>900){ lastBeat=t; tick(); } }
+
+function startKeepAlive(){
+  if(!CFG.keep) return;
+  var p=keepEl.play();
+  if(p && p.catch) p.catch(function(){ log("iOS bloqueo el audio de fondo","wrn"); });
+  if("mediaSession" in navigator){
+    try{
+      navigator.mediaSession.metadata=new MediaMetadata({ title:"Vigilando "+CFG.clave+" G"+CFG.grupos, artist:"Radar de vacantes FI" });
+      navigator.mediaSession.playbackState="playing";
+    }catch(e){}
+  }
+}
+function stopKeepAlive(){ try{ keepEl.pause(); }catch(e){} }
+
+/* ─────────── Wake lock ─────────── */
+var wl=null;
+function askWake(){
+  if(!CFG.wake || !navigator.wakeLock) return;
+  navigator.wakeLock.request("screen").then(function(l){
+    wl=l; l.addEventListener("release", function(){ wl=null; });
+  }).catch(function(){});
+}
+function dropWake(){ if(wl){ try{ wl.release(); }catch(e){} wl=null; } }
+
+/* ─────────── Bitácora ─────────── */
+var LOGK="vacfi.log.v1", LOGS=[];
+try{ LOGS=JSON.parse(localStorage.getItem(LOGK)||"[]"); }catch(e){ LOGS=[]; }
+function log(msg, cls){
+  var d=new Date();
+  var ts=("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)+":"+("0"+d.getSeconds()).slice(-2);
+  LOGS.unshift({t:ts,m:msg,c:cls||""});
+  if(LOGS.length>200) LOGS.length=200;
+  try{ localStorage.setItem(LOGK,JSON.stringify(LOGS)); }catch(e){}
+  paintLog();
+}
+function paintLog(){
+  $("log").innerHTML = LOGS.length
+    ? LOGS.map(function(e){ return '<div><span class="ts">'+e.t+'</span><span class="'+e.c+'">'+esc(e.m)+'</span></div>'; }).join("")
+    : '<div><span class="ts">--:--:--</span><span>Sin registros</span></div>';
+}
+function esc(s){
+  return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; });
+}
+
+/* ─────────── Red ─────────── */
+function fetchOnce(url, ms){
+  var ctl = (typeof AbortController!=="undefined") ? new AbortController() : null;
+  var to  = ctl ? setTimeout(function(){ ctl.abort(); }, ms) : null;
+  var opt = { cache:"no-store", redirect:"follow" };
+  if(ctl) opt.signal=ctl.signal;
+  return fetch(url,opt).then(function(r){
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return r.text();
+  }).then(function(t){
+    if(to) clearTimeout(to);
+    if(!t || t.length<300) throw new Error("respuesta vacia");
+    if(!/[Vv]acantes/.test(t)) throw new Error("contenido inesperado");
+    return t;
+  }).catch(function(e){ if(to) clearTimeout(to); throw e; });
+}
+
+function fetchSchedule(){
+  var u=targetUrl(), order=PROXIES.slice(), i=0;
+  if(pxLast) order.sort(function(a,b){ return (b.id===pxLast?1:0)-(a.id===pxLast?1:0); });
+  function next(){
+    if(i>=order.length) return Promise.reject(new Error("todos los proxies fallaron"));
+    var p=order[i++];
+    return fetchOnce(p.url(u), 18000).then(function(t){
+      pxHealth[p.id]="ok"; pxLast=p.id; paintProxies(p.id); return t;
+    }).catch(function(){
+      pxHealth[p.id]="bad"; paintProxies(null); return next();
+    });
+  }
+  return next();
+}
+function paintProxies(active){
+  $("pxs").innerHTML = PROXIES.map(function(p){
+    var c = p.id===active ? "px act"
+          : pxHealth[p.id]==="ok"  ? "px ok"
+          : pxHealth[p.id]==="bad" ? "px bad" : "px";
+    return '<span class="'+c+'">'+p.name+'</span>';
+  }).join("");
+}
+
+/* ─────────── Parseo ─────────── */
+function addRow(out,c){
+  if(!/^\d{3,4}$/.test(c[0]) || !/^\d{1,3}$/.test(c[1])) return;
+  var g=String(parseInt(c[1],10));
+  out.push({ clave:c[0], gpo:g, prof:c[2], tipo:c[3], hora:c[4], dias:c[5], salon:c[6],
+             cupo:parseInt(c[7],10)||0, vac:parseInt(c[8],10)||0, key:c[0]+"-"+g });
+}
+function parseRows(text){
+  var out=[], i, j;
+  if(/<td[\s>]/i.test(text)){
+    try{
+      var doc=new DOMParser().parseFromString(text,"text/html");
+      var trs=doc.querySelectorAll("tr");
+      for(i=0;i<trs.length;i++){
+        var tds=trs[i].querySelectorAll("td");
+        if(tds.length>=9){
+          var c=[];
+          for(j=0;j<9;j++) c.push(tds[j].textContent.replace(/\s+/g," ").trim());
+          addRow(out,c);
+        }
+      }
+    }catch(e){}
+  }
+  if(!out.length){                                   /* formato markdown, que es lo que regresa jina */
+    text.split("\n").forEach(function(l){
+      var s=l.trim();
+      if(s.charAt(0)!=="|") return;
+      var c=s.split("|").slice(1,-1).map(function(x){ return x.replace(/\*\*/g,"").replace(/\s+/g," ").trim(); });
+      if(c.length>=9) addRow(out,c.slice(0,9));
+    });
+  }
+  var seen={}, uniq=[];
+  out.forEach(function(r){ if(!seen[r.key]){ seen[r.key]=1; uniq.push(r); } });
+  uniq.sort(function(a,b){ return a.clave===b.clave ? (+a.gpo)-(+b.gpo) : (+a.clave)-(+b.clave); });
+  return uniq;
+}
+function parseSrcTime(text){
+  var m=text.match(/Horario Actualizado:\s*([0-9:]{5,8})\s+([0-9\-]{8,10})/);
+  if(m) return m[1]+" "+m[2];
+  m=text.match(/^Published Time:\s*(.+)$/m);          /* jina se come el pie de página, pero da esto */
+  if(m){
+    var d=new Date(m[1].trim());
+    if(!isNaN(d.getTime())){
+      var p=function(x){ return ("0"+x).slice(-2); };
+      return p(d.getHours())+":"+p(d.getMinutes())+":"+p(d.getSeconds())+" "+p(d.getDate())+"-"+p(d.getMonth()+1)+"-"+d.getFullYear();
+    }
+  }
+  return "";
+}
+
+/* ─────────── Qué se vigila ─────────── */
+function watchKeys(){
+  var base=(CFG.clave||"").trim();
+  return (CFG.grupos||"").split(",").map(function(s){
+    s=s.trim();
+    if(!s) return null;
+    if(s.indexOf("-")>0){ var p=s.split("-"); return p[0].trim()+"-"+String(parseInt(p[1],10)); }
+    return base+"-"+String(parseInt(s,10));
+  }).filter(function(k){ return k && /^\d{3,4}-\d+$/.test(k); });
+}
+function plural(n){ return n===1 ? "1 vacante" : n+" vacantes"; }
+function rowOf(k){ for(var i=0;i<ROWS.length;i++) if(ROWS[i].key===k) return ROWS[i]; return null; }
+function labelOf(k){
+  var r=rowOf(k), p=k.split("-");
+  return p[0]+" G"+p[1]+(r&&r.hora ? " ("+r.hora+" "+r.dias+")" : "");
+}
+
+/* ─────────── Ciclo de sondeo ─────────── */
+function poll(manual){
+  if(polling) return;
+  if(!running && !manual) return;
+  polling=true;
+  setDot("busy");
+  $("statusTxt").textContent = "Consultando el SSA…";
+  fetchSchedule().then(function(text){
+    polling=false;
+    nextAt = Date.now() + Math.max(15,CFG.seg)*1000;
+    lastOk = Date.now();
+    var rows = parseRows(text);
+    if(!rows.length){
+      log("Respuesta sin grupos legibles (¿clave "+CFG.clave+" sin horarios?)","wrn");
+      setDot(running?"on":""); paintAll(); return;
+    }
+    ROWS = rows;
+    var t=parseSrcTime(text);
+    if(t!==srcTime){ srcTime=t; srcSince=Date.now(); staleWarned=false; }
+    else if(srcSince && !staleWarned && Date.now()-srcSince>15*60000){
+      staleWarned=true;
+      log("El SSA lleva >15 min sin regenerar el archivo (o el proxy está cacheando)","wrn");
+    }
+    evaluate();
+    paintAll();
+    setDot(running?"on":"");
+  }).catch(function(e){
+    polling=false;
+    nextAt = Date.now() + Math.max(15,CFG.seg)*1000;
+    setDot("err");
+    log("Falló la consulta: "+e.message,"err");
+    paintAll();
+  });
+}
+
+function evaluate(){
+  var byKey={}, i;
+  for(i=0;i<ROWS.length;i++) byKey[ROWS[i].key]=ROWS[i];
+
+  var keys = CFG.any ? Object.keys(byKey) : watchKeys();
+  var hits=[];
+
+  keys.forEach(function(k){
+    var r=byKey[k];
+    var now = r ? r.vac : -1;
+    var was = PREV.hasOwnProperty(k) ? PREV[k] : null;
+
+    if(now<0){
+      if(was!==null) log(labelOf(k)+" desapareció del listado","wrn");
+    }else{
+      if(was===null){
+        log(labelOf(k)+": "+plural(now)+(now>0?" ← ¡ya hay lugar!":""), now>0?"hit":"");
+      }else if(now!==was){
+        log(labelOf(k)+": "+was+" → "+now+" vacantes", now>was?"hit":"wrn");
+      }
+      if(now>0 && !ACK[k]) hits.push(k);
+      if(now<=0) delete ACK[k];
+    }
+    PREV[k]=now;
+  });
+
+  /* Cambios en grupos que NO vigilas: sólo se registran, sin alarma */
+  if(!CFG.any){
+    ROWS.forEach(function(r){
+      if(keys.indexOf(r.key)>=0) return;
+      var pk="~"+r.key, was = PREV.hasOwnProperty(pk) ? PREV[pk] : null;
+      if(was!==null && was!==r.vac) log("(sin vigilar) "+r.clave+" G"+r.gpo+": "+was+" → "+r.vac,"");
+      PREV[pk]=r.vac;
+    });
+  }
+
+  if(hits.length) fire(hits);
+}
+
+/* ─────────── Alarma ─────────── */
+function fire(keys){
+  keys.forEach(function(k){ ACK[k]=true; });
+  var txt = keys.map(function(k){
+    var r=rowOf(k);
+    return labelOf(k)+" — "+(r?r.vac:"?")+" lugar"+((r&&r.vac===1)?"":"es");
+  }).join(" · ");
+
+  log("VACANTE: "+txt,"hit");
+
+  $("bTxt").textContent = txt;
+  $("banner").classList.add("show");
+  document.body.classList.add("ALARMA");
+  alarming=true;
+  document.title = "🔴 ¡LUGAR LIBRE! " + CFG.clave;
+
+  initAudio();
+  try{ sirenEl.currentTime=0; var p=sirenEl.play(); if(p&&p.catch) p.catch(function(){ beepFallback(); }); }
+  catch(e){ beepFallback(); }
+  if(navigator.vibrate) try{ navigator.vibrate([400,150,400,150,400,150,700]); }catch(e){}
+
+  if(CFG.voz && window.speechSynthesis){
+    try{
+      var u=new SpeechSynthesisUtterance("Atención. Se liberó lugar en "+keys.map(function(k){
+        var p=k.split("-"); return "grupo "+p[1];
+      }).join(" y ")+". Córrele.");
+      u.lang="es-MX"; u.rate=1.05;
+      speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  if(CFG.notif && "Notification" in window && Notification.permission==="granted"){
+    try{
+      var n=new Notification("¡Se liberó lugar! "+CFG.clave,{ body:txt, tag:"vacfi", renotify:true });
+      n.onclick=function(){ window.focus(); };
+    }catch(e){}
+  }
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function beepFallback(){
+  if(!AC) return;
+  var t0=AC.currentTime;
+  for(var i=0;i<8;i++){
+    var o=AC.createOscillator(), g=AC.createGain();
+    o.type="square"; o.frequency.value = i%2 ? 1244 : 830;
+    g.gain.setValueAtTime(0.0001,t0+i*0.28);
+    g.gain.exponentialRampToValueAtTime(0.45,t0+i*0.28+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,t0+i*0.28+0.24);
+    o.connect(g); g.connect(AC.destination);
+    o.start(t0+i*0.28); o.stop(t0+i*0.28+0.26);
+  }
+}
+function ack(){
+  alarming=false;
+  try{ sirenEl.pause(); sirenEl.currentTime=0; }catch(e){}
+  if(window.speechSynthesis) try{ speechSynthesis.cancel(); }catch(e){}
+  $("banner").classList.remove("show");
+  document.body.classList.remove("ALARMA");
+  document.title="Vacantes FI · "+CFG.clave;
+  log("Alarma silenciada, se sigue vigilando","");
+  paintAll();
+}
+function testAlarm(){
+  initAudio();
+  try{ sirenEl.currentTime=0; var p=sirenEl.play(); if(p&&p.catch) p.catch(function(){ beepFallback(); }); }
+  catch(e){ beepFallback(); }
+  setTimeout(function(){ try{ sirenEl.pause(); sirenEl.currentTime=0; }catch(e){} }, 2600);
+  if(navigator.vibrate) try{ navigator.vibrate([300,120,300]); }catch(e){}
+  log("Prueba de alarma","");
+}
+
+/* ─────────── Pintado ─────────── */
+function setDot(k){
+  var d=$("dot");
+  d.className = "dot" + (k?(" "+k):"");
+}
+function fmtAgo(ms){
+  if(!ms) return "nunca";
+  var s=Math.round((Date.now()-ms)/1000);
+  if(s<60) return "hace "+s+" s";
+  return "hace "+Math.round(s/60)+" min";
+}
+function paintAll(){ paintHero(); paintTable(); paintStatus(); }
+
+function paintStatus(){
+  var t;
+  if(polling) t="Consultando el SSA…";
+  else if(!running) t="Detenido"+(lastOk?" · última "+fmtAgo(lastOk):"");
+  else {
+    var left=Math.max(0,Math.round((nextAt-Date.now())/1000));
+    t="Siguiente revisión en "+left+" s · última "+fmtAgo(lastOk);
+  }
+  if(srcTime) t += " · SSA actualizó "+srcTime+(staleWarned?" ⚠︎":"");
+  $("statusTxt").textContent=t;
+}
+
+function paintHero(){
+  var keys = CFG.any ? ROWS.filter(function(r){return r.vac>0;}).map(function(r){return r.key;}) : watchKeys();
+  var hero=$("hero"), num=$("heroNum"), who=$("heroWho"), meta=$("heroMeta"), lbl=$("heroLbl");
+
+  if(CFG.any){
+    var free = ROWS.filter(function(r){ return r.vac>0; });
+    lbl.textContent="Cualquier grupo con lugar";
+    num.textContent = ROWS.length ? String(free.length) : "—";
+    who.textContent = free.length ? free.map(function(r){ return r.clave+" G"+r.gpo+" ("+r.vac+")"; }).join(" · ")
+                                  : "Ningún grupo con vacantes";
+    setHeroState(hero,num,free.length>0);
+  }else{
+    var main = keys[0];
+    var total=0, found=false, parts=[];
+    keys.forEach(function(k){
+      var r=rowOf(k);
+      if(r){ found=true; total+=r.vac; parts.push("G"+r.gpo+": "+r.vac); }
+      else parts.push(k.split("-")[1]+": ?");
+    });
+    lbl.textContent = keys.length>1 ? "Vacantes en tus grupos" : "Vacantes";
+    num.textContent = ROWS.length ? (found?String(total):"?") : "—";
+    who.textContent = keys.length ? keys.map(labelOf).join("  ·  ") : "Configura los grupos a vigilar";
+    if(keys.length>1) who.textContent += "  →  "+parts.join(" · ");
+    setHeroState(hero,num,total>0);
+    void main;
+  }
+
+  var m=[];
+  if(ROWS.length) m.push(ROWS.length+" grupos leídos");
+  if(srcTime) m.push("SSA: "+srcTime);
+  m.push("revisión "+fmtAgo(lastOk));
+  meta.textContent=m.join(" · ");
+}
+function setHeroState(hero,num,hit){
+  hero.classList.toggle("hit",!!hit);
+  num.classList.toggle("hit",!!hit);
+  num.classList.toggle("zero",!hit);
+}
+
+function paintTable(){
+  if(!ROWS.length) return;
+  var wk=watchKeys();
+  var html='<table><thead><tr><th>Gpo</th><th>Profesor / horario</th><th style="text-align:right">Vac</th></tr></thead><tbody>';
+  var lastClave=null;
+  ROWS.forEach(function(r){
+    if(r.clave!==lastClave){
+      lastClave=r.clave;
+      html+='<tr><td colspan="3" style="border-top:1px solid var(--line);padding-top:12px">'
+          + '<span class="sec" style="margin:0">'+(r.clave===CFG.clave?"Teoría · ":"Laboratorio · ")+r.clave+'</span></td></tr>';
+    }
+    var cls=[]; if(r.vac>0) cls.push("free"); if(wk.indexOf(r.key)>=0) cls.push("watch");
+    html+='<tr class="'+cls.join(" ")+'">'
+        + '<td class="g">'+r.gpo+'</td>'
+        + '<td><div style="font-weight:600">'+esc(r.hora)+' · '+esc(r.dias)+' · '+esc(r.salon)+'</div>'
+        + '<div class="tiny">'+esc(r.prof)+'</div></td>'
+        + '<td class="v '+(r.vac>0?"free":"zero")+'">'+r.vac+'<div class="tiny" style="font-weight:400">/'+r.cupo+'</div></td>'
+        + '</tr>';
+  });
+  html+='</tbody></table>';
+  $("tblWrap").innerHTML=html;
+}
+
+/* ─────────── Reloj ─────────── */
+function tick(){
+  if(running && !polling && Date.now()>=nextAt) poll();
+  paintStatus();
+}
+setInterval(tick,1000);
+document.addEventListener("visibilitychange",function(){
+  if(document.visibilityState==="visible"){
+    askWake();
+    if(running && !polling && Date.now()>=nextAt) poll();
+  }
+});
+
+/* ─────────── Arranque / paro ─────────── */
+function toggle(){
+  running ? stop() : start();
+}
+function start(){
+  readForm();
+  initAudio();            /* estamos dentro del gesto del usuario: aquí se desbloquea el audio */
+  startKeepAlive();
+  askWake();
+  if(CFG.notif && "Notification" in window && Notification.permission==="default"){
+    try{ Notification.requestPermission(); }catch(e){}
+  }
+  running=true; nextAt=0;
+  $("mainBtn").textContent="■ DETENER";
+  $("mainBtn").className="btn stop";
+  $("cfgBox").open=false;
+  setDot("on");
+  log("Vigilando "+CFG.clave+" grupo(s) "+CFG.grupos+" cada "+CFG.seg+" s","");
+  poll(true);
+}
+function stop(){
+  running=false;
+  stopKeepAlive(); dropWake();
+  if("mediaSession" in navigator) try{ navigator.mediaSession.playbackState="paused"; }catch(e){}
+  $("mainBtn").textContent="▶︎ INICIAR VIGILANCIA";
+  $("mainBtn").className="btn go";
+  setDot("");
+  log("Vigilancia detenida","wrn");
+  paintStatus();
+}
+
+/* ─────────── Formulario ─────────── */
+function readForm(){
+  var prevWatch=CFG.clave+"|"+CFG.grupos+"|"+CFG.any;
+  CFG.clave  = ($("fClave").value||"1867").replace(/\D/g,"").slice(0,4) || "1867";
+  CFG.grupos = $("fGrupos").value || "1";
+  CFG.seg    = Math.min(900, Math.max(15, parseInt($("fSeg").value,10)||45));
+  CFG.any    = $("fAny").checked;
+  CFG.keep   = $("fKeep").checked;
+  CFG.wake   = $("fWake").checked;
+  CFG.notif  = $("fNotif").checked;
+  CFG.voz    = $("fVoz").checked;
+  CFG.go     = $("fGo").value;
+  $("fClave").value=CFG.clave; $("fSeg").value=CFG.seg;
+  $("bGo").href=CFG.go;
+  if(!alarming) document.title="Vacantes FI · "+CFG.clave;
+  if(prevWatch!==CFG.clave+"|"+CFG.grupos+"|"+CFG.any){ PREV={}; ACK={}; }
+  saveCfg();
+}
+function fillForm(){
+  $("fClave").value=CFG.clave; $("fGrupos").value=CFG.grupos; $("fSeg").value=CFG.seg;
+  $("fAny").checked=CFG.any; $("fKeep").checked=CFG.keep; $("fWake").checked=CFG.wake;
+  $("fNotif").checked=CFG.notif; $("fVoz").checked=CFG.voz;
+  var sel=$("fGo"), found=false, i;
+  for(i=0;i<sel.options.length;i++) if(sel.options[i].value===CFG.go){ sel.selectedIndex=i; found=true; }
+  if(!found) sel.selectedIndex=0;
+  $("bGo").href=CFG.go;
+  $("heroWho").textContent=CFG.clave+" · Grupo "+CFG.grupos;
+  document.title="Vacantes FI · "+CFG.clave;
+}
+["fClave","fGrupos","fSeg","fAny","fKeep","fWake","fNotif","fVoz","fGo"].forEach(function(id){
+  $(id).addEventListener("change",function(){
+    readForm();
+    if(running){ stopKeepAlive(); startKeepAlive(); askWake(); nextAt=0; }
+    paintAll();
+  });
+});
+function resetAll(){
+  if(!confirm("¿Borrar ajustes e historial?")) return;
+  try{ localStorage.removeItem(LS); localStorage.removeItem(LOGK); }catch(e){}
+  location.reload();
+}
+
+/* ─────────── Manifest para "Agregar a inicio" ─────────── */
+try{
+  var mf={ name:"Radar de vacantes FI", short_name:"Vacantes FI", display:"standalone",
+           background_color:"#0b0d12", theme_color:"#0b0d12", start_url:location.href, scope:"./",
+           icons:[{ src:document.querySelector('link[rel=apple-touch-icon]').href, sizes:"180x180", type:"image/svg+xml" }] };
+  var lk=document.createElement("link"); lk.rel="manifest";
+  lk.href=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:"application/manifest+json"}));
+  document.head.appendChild(lk);
+}catch(e){}
+
+/* ─────────── Init ─────────── */
+loadCfg();
+fillForm();
+paintLog();
+paintProxies(null);
+paintAll();
+if(location.protocol==="file:"){
+  log("Abierto como archivo local: si algún proxy falla, súbelo a un https","wrn");
+}
+</script>
+</body>
+</html>
