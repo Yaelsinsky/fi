@@ -1,0 +1,16 @@
+/*
+ * Yael Eduardo Camarena Arévalo
+ * No. de cuenta: 318279864
+ * Fecha: 16 de octubre de 2026
+ */
+
+struct intpair {
+        int a;
+        int b;
+};
+
+program SUMA_PROG {
+        version SUMA_VERS {
+                int SUMA(intpair) = 1;
+        } = 1;
+} = 0x23451111;
