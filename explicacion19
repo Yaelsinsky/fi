@@ -1,0 +1,9 @@
+Dividí el sistema en cinco capas para que cada una haga solo lo suyo.
+
+Los clientes entran desde la web, la app o la tienda física, y todo pasa primero por un API Gateway, que revisa permisos y controla el tráfico. De ahí cada canal tiene su BFF, que solo acomoda la información para que se vea bien en web o en la app.
+
+La lógica del negocio la separé en microservicios (checkout, catálogo, inventario y usuarios). Como solo hay un catálogo y un inventario, los precios y el stock salen iguales en todos lados. El checkout usa una Saga, que va coordinando la compra y si algo falla la deshace, por ejemplo regresa el producto al inventario si no pasó el pago.
+
+Para no depender de los proveedores, el checkout no les habla directo. Deja un mensaje en un broker (Pub/Sub) y cada proveedor (Stripe, PayPal, DHL, ERP) tiene un adaptador que traduce su forma de trabajar a la de la tienda. Si alguno se cae, el circuit breaker lo desconecta un rato y lo demás sigue funcionando.
+
+En los datos usé CQRS, o sea que la base de cobro solo guarda compras y los reportes leen de una copia. El catálogo se guarda en Redis para que cargue rápido, y las notificaciones salen del broker, así nada compite con el cobro por la base de datos.
